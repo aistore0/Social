@@ -1,84 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Convert your local files into temporary URLs easily with this modern file-to-URL converter. Just upload a file and get a download link instantly.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File to Url</title>
   <meta name="author" content="FaizStore">
-  <meta name="keywords" content="File to URL, Converter, Temporary URL, File Upload, HTML Tool">
-  <title>File to URL Converter</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/565/565547.png" type="image/png">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
-      color: #fff;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-    input[type="file"] {
-      padding: 10px 20px;
-      border-radius: 30px;
-      background-color: #fff;
-      color: #333;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      transition: background 0.3s ease;
-    }
-    input[type="file"]:hover {
-      background-color: #f0f0f0;
-    }
-    a {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #ffd700;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-    a:hover {
-      color: #ffae00;
-    }
-    footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
-  </style>
+  <meta name="keywords" content="File to URL, Converter, Temporary URL, File Upload, Tool">
+    <meta name="description" content="Upload your files to url link easily with a random generated.">
+    <link rel="icon" href="./elaina/2.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4e9f3d, #2a2a72);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        input[type="file"] {
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            border: none;
+            width: 80%;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            transform: scale(1.05);
+            background-color: #e0e0e0;
+        }
+
+        button {
+            background-color: #4e9f3d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2a8f25;
+            transform: scale(1.05);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #ffcc00;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+    </style>
 </head>
 <body>
-  <h1>🎉 File to URL Converter</h1>
-  <p>Upload a file to generate a temporary URL</p>
-  <input type="file" id="fileInput">
-  <a id="downloadLink" href="#" target="_blank" style="display: none;">Download Link</a>
-  <footer>Built with ❤️ by FaizStore</footer>
-  <script>
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const url = URL.createObjectURL(file);
-        const downloadLink = document.getElementById('downloadLink');
-        downloadLink.href = url;
-        downloadLink.textContent = `Download ${file.name}`;
-        downloadLink.style.display = 'block';
-      }
+    <div class="container">
+        <h1>Upload File to url</h1>
+
+        <input type="file" id="fileInput" />
+        <button onclick="uploadFile()">Upload</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const username = 'aistore0'; // Ganti dengan username GitHub Anda
+        const repo = 'Social'; // Ganti dengan nama repo Anda
+        const branch = 'main'; // Ganti dengan branch yang sesuai jika diperlukan
+
+        const folderPath = 'Upload/';
+
+       const token = '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';
+
+        function generateRandomFileName(originalName) {
+            const timestamp = Date.now();
+            const extension = originalName.split('.').pop(); 
+            return `File-${timestamp}.${extension}`; 
+        }
+
+        async function uploadFile() {
+    if (!token) {
+        alert('Sedang error, Website sedang proses...,!');
+        return;
+    }
+
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert('Pilih file terlebih dahulu!');
+        return;
+    }
+
+    const randomFileName = generateRandomFileName(file.name);
+    const fileContent = await readFileAsBase64(file);  // Ganti fungsi readFile
+
+    const url = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}${randomFileName}`;
+    const headers = {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json'
+    };
+
+    const data = {
+        message: `Upload ${randomFileName}`,
+        content: fileContent,  // Gunakan base64 dari file
+        branch: branch
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+        	setTimeout(function() {
+            document.getElementById("result").innerText = "Waiting for 1m!";
+        }, 2000);
+         setTimeout(function() { 
+            document.getElementById('result').innerHTML = `File uploaded successfully! <a href="https://aistore.my.id/Upload/${randomFileName}" target="_blank">Click here to view the file</a>`;
+               }, 60000);  } else {
+            document.getElementById('result').innerHTML = `Error: ${result.message}`;
+        }
+    } catch (error) {
+        console.error(error);
+        document.getElementById('result').innerHTML = 'Failed to upload file.';
+    }
+}
+
+// Fungsi untuk membaca file dan mengembalikan base64
+function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);  // Ambil bagian base64 setelah ","
+        reader.onerror = reject;
+        reader.readAsDataURL(file);  // Membaca file sebagai Data URL (base64)
     });
-  </script>
+}
+    </script>
 </body>
 </html>
