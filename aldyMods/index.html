@@ -1,0 +1,346 @@
+<head>  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AldyMods - Toko terpercaya untuk produk VPS, Panel, dan Script dengan tampilan keren dan navigasi interaktif.">
+  <meta name="keywords" content="AldyMods, VPS, Panel, Script, Toko Online, Teknologi, Server">
+  <meta name="author" content="AldyMods Team">
+  <link rel="icon" href="1.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Monospace&display=swap" rel="stylesheet">
+  <title>AldyMods | Products</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #121212;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: left;
+      padding: 20px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      background: linear-gradient(90deg, red, yellow, green, blue, purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 5s linear infinite;
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+
+    @keyframes rainbow {
+      from {
+        background-position: 0%;
+      }
+      to {
+        background-position: 100%;
+      }
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .tab {
+      margin: 0 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      background: #333;
+      border-radius: 10px;
+      transition: 0.3s;
+      text-align: center;
+      min-width: 80px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .tab:hover {
+      background: #444;
+    }
+
+    .tab.active {
+      background: #555;
+      color: #00ff99;
+    }
+
+    .products-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 20px;
+      gap: 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .product {
+      min-width: 200px;
+      max-width: 300px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      scroll-snap-align: start;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .product .icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #00ff99;
+    }
+
+    .product h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .product p {
+      font-size: 16px;
+      font-weight: bold;
+      color: #00ff99;
+    }
+
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10;
+    }
+
+    .loading span {
+      font-size: 20px;
+      background: linear-gradient(90deg, red, yellow, green, blue, purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .details {
+      display: none;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      animation: fold 0.5s ease-out forwards;
+    }
+
+    @keyframes fold {
+      from {
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .details button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #00ff99;
+      color: #000;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .details button:hover {
+      background: #00cc7a;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">
+    <span id="load">ALDY MODS</span>
+  </div>
+
+  <header>
+    <h1>AldyMods</h1>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-category="semua">Semua</div>
+    <div class="tab" data-category="vps">VPS</div>
+    <div class="tab" data-category="panel">Panel</div>
+    <div class="tab" data-category="script">Script</div>
+  </div>
+  <div class="tabs">
+  	<a class="tab" href="https://wa.me/6285607621588?text=bang+mau+beli">Chat Owner</a>
+  </div>
+
+  <div id="products">
+    <div class="products-container" data-category="semua">
+      <div class="product" data-category="vps">
+        <i class="fas fa-server icon"></i>
+        <h2>VPS R2 C1</h2>
+        <p>Rp 25.000</p>
+      </div>
+        <div id="products">
+      <div class="product" data-category="vps"><
+        <i class="fas fa-server icon"></i>
+        <h2>VPS R4 C2</h2>
+        <p>Rp 35.000</p></div>
+      </div>
+        <div id="products">
+      <div class="product" data-category="vps">
+        <i class="fas fa-server icon"></i>
+        <h2>VPS R8 C4</h2>
+        <p>Rp 55.000</p></div>
+      </div>
+        <div id="products">
+      <div class="product" data-category="vps">
+        <i class="fas fa-server icon"></i>
+        <h2>VPS R16 C4</h2>
+        <p>Rp 60.000</p>
+      </div>
+      </div>
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 1gb</h2>
+        <p>Rp 2k</p>
+      </div>
+   
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 2gb</h2>
+        <p>Rp 3k</p>
+      </div>
+   
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 3gb</h2>
+        <p>Rp 4k</p>
+      </div>
+    
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 4gb</h2>
+        <p>Rp 5k</p>
+      </div>
+    
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 5gb</h2>
+        <p>Rp 6k</p>
+      </div>
+   
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 6gb</h2>
+        <p>Rp 7k</p>
+      </div>
+    
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 7gb</h2>
+        <p>Rp 8k</p>
+      </div>
+      
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 8gb</h2>
+        <p>Rp 9k</p>
+      </div>
+    
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 9gb</h2>
+        <p>Rp 10k</p>
+      </div>
+    
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel 10gb</h2>
+        <p>Rp 11k</p>
+      </div>
+     
+      <div class="product" data-category="panel">
+        <i class="fas fa-tools icon"></i>
+        <h2>Panel unlimited Ram,Cpu</h2>
+        <p>Rp 12k</p>
+      </div>
+      <div class="product" data-category="script">
+        <i class="fas fa-code icon"></i>
+        <h2>Kosong</h2>
+        <p>Rp 0</p>
+      </div>
+       </div>
+         
+  <div class="details">
+    <h2>Detail Produk</h2>
+    <p id="product-detail"></p>
+    <button href="https://wa.me/6285607621588?text=bang+mau+beli">Chat Owner</button>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const productContainers = document.querySelectorAll('.products-container');
+    const loading = document.querySelector('.loading');
+    const details = document.querySelector('.details');
+    const detailText = document.getElementById('product-detail');
+
+    setTimeout(function () {
+      loading.classList.add('hidden');
+    }, 5000);
+
+    setInterval(() => {
+      document.getElementById("load").innerText = "ALDY MODS .";
+      setTimeout(() => document.getElementById("load").innerText = "ALDY MODS . .", 500);
+      setTimeout(() => document.getElementById("load").innerText = "ALDY MODS . . .", 1000);
+    }, 1500);
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const category = tab.getAttribute('data-category');
+        productContainers.forEach(container => {
+          const products = container.querySelectorAll('.product');
+          products.forEach(product => {
+            product.style.display = (category === 'semua' || product.getAttribute('data-category') === category) ? 'block' : 'none';
+          });
+        });
+      });
+    });
+
+    document.querySelectorAll('.product').forEach(product => {
+      product.addEventListener('click', () => {
+        details.style.display = 'block';
+        detailText.innerText = `${product.querySelector('h2').innerText} - Harga: ${product.querySelector('p').innerText}`;
+      });
+    });
+  </script>
+</body>
+  </html>
