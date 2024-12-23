@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Convert your local files into temporary URLs easily with this modern file-to-URL converter. Just upload a file and get a download link instantly.">
+  <meta name="author" content="FaizStore">
+  <meta name="keywords" content="File to URL, Converter, Temporary URL, File Upload, HTML Tool">
+  <title>File to URL Converter</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/565/565547.png" type="image/png">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    input[type="file"] {
+      padding: 10px 20px;
+      border-radius: 30px;
+      background-color: #fff;
+      color: #333;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease;
+    }
+    input[type="file"]:hover {
+      background-color: #f0f0f0;
+    }
+    a {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #ffae00;
+    }
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 File to URL Converter</h1>
+  <p>Upload a file to generate a temporary URL</p>
+  <input type="file" id="fileInput">
+  <a id="downloadLink" href="#" target="_blank" style="display: none;">Download Link</a>
+  <footer>Built with ❤️ by FaizStore</footer>
+  <script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        const downloadLink = document.getElementById('downloadLink');
+        downloadLink.href = url;
+        downloadLink.textContent = `Download ${file.name}`;
+        downloadLink.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
