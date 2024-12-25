@@ -1,6 +1,6 @@
 # MADE BY FAIZ
 
-https://aistpre.my.id
+https://aistore.my.id
 
 SCRIPT | Y(YES)/N(NO)
 ------------- | -------------
