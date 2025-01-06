@@ -3,196 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File to Url</title>
-  <meta name="author" content="FaizStore">
-  <meta name="keywords" content="File to URL, Converter, Temporary URL, File Upload, Tool">
-    <meta name="description" content="Upload your files to url link easily with a random generated.">
-    <link rel="icon" href="./elaina/2.png">
-
+    <title>Upload File/Image to img100 url</title>
+    <meta name="description" content="Import your image or file for change to url ">
+    <link rel="icon" href="./icon/i100.png">
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #4e9f3d, #2a2a72);
-            height: 100vh;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
+            height: 100vh;
             overflow: hidden;
-            animation: fadeIn 2s ease-in-out;
         }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
         .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 40px 50px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            animation: slideUp 1s ease-out;
-        }
-
-        @keyframes slideUp {
-            0% { transform: translateY(100px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-            animation: fadeIn 3s ease-in-out;
-        }
-
-        input[type="file"] {
-            padding: 15px;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            border: none;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             width: 80%;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
+            max-width: 500px;
+            text-align: center;
         }
-
-        input[type="file"]:hover {
-            transform: scale(1.05);
-            background-color: #e0e0e0;
+        input[type="file"] {
+            margin: 20px 0;
         }
-
-        button {
-            background-color: #4e9f3d;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            cursor: pointer;
+        .progress-bar {
+            position: relative;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 5px;
-            margin-top: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            overflow: hidden;
         }
-
-        button:hover {
-            background-color: #2a8f25;
-            transform: scale(1.05);
+        .progress-bar span {
+            display: block;
+            height: 10px;
+            background: #4caf50;
+            width: 0%;
+            transition: width 1s linear;
         }
-
-        #result {
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .output {
             margin-top: 20px;
-            font-size: 1.2rem;
-            color: #ffcc00;
-            animation: fadeIn 3s ease-in-out;
+            display: none;
         }
-
-        a {
-            color: #ffcc00;
+        .output a {
+            color: #4caf50;
+            font-weight: bold;
             text-decoration: none;
-            transition: color 0.3s ease;
         }
-
-        a:hover {
-            color: #fff;
-        }
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Upload File to url</h1>
-
-        <input type="file" id="fileInput" />
-        <button onclick="uploadFile()">Upload</button>
-
-        <div id="result"></div>
+        <h1>Upload File/Image to Url img100</h1>
+        <input type="file" id="fileInput" accept="*/*">
+        <button class="btn" id="uploadBtn">Upload</button>
+        <div class="progress-bar" id="progressBar">
+            <span></span>
+        </div>
+        <div class="output" id="output">
+            <p>File Uploaded Successfully:</p>
+            <a href="#" target="_blank" id="fileLink">View File</a>
+        </div>
     </div>
-
     <script>
-        const username = 'aistore0'; // Ganti dengan username GitHub Anda
-        const repo = 'Social'; // Ganti dengan nama repo Anda
-        const branch = 'main'; // Ganti dengan branch yang sesuai jika diperlukan
+        document.getElementById('uploadBtn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('fileInput');
+            const progressBar = document.getElementById('progressBar').querySelector('span');
+            const output = document.getElementById('output');
+            const fileLink = document.getElementById('fileLink');
 
-        const folderPath = 'Upload/';
+            if (fileInput.files.length === 0) {
+                alert('Please select a file!');
+                return;
+            }
 
-       const token = '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';
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
 
-        function generateRandomFileName(originalName) {
-            const timestamp = Date.now();
-            const extension = originalName.split('.').pop(); 
-            return `File-${timestamp}.${extension}`; 
-        }
+            reader.onload = async () => {
+                const tokeninput = "Z2hwX29CUHFwcWkzMWg5ckhUZDdMWElzRW9tdzExWjBJZjBTS256Yw==";
+                const token = atob(tokeninput);
 
-        async function uploadFile() {
-    if (!token) {
-        alert('Sedang error, Website sedang proses...,!');
-        return;
-    }
+                const randomFileName = Math.random().toString(36).substring(2, 12) + "_" + file.name;
+                const username = "aistore0";
+                const repo = "img100"; // 
+                const branch = "main"; // 
 
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
+                const url = `https://api.github.com/repos/${username}/${repo}/contents/${randomFileName}`;
 
-    if (!file) {
-        alert('Pilih file terlebih dahulu!');
-        return;
-    }
+                const data = {
+                    message: `Upload ${file.name} via img100`,
+                    content: reader.result.split(',')[1],
+                    branch: branch
+                };
 
-    const randomFileName = generateRandomFileName(file.name);
-    const fileContent = await readFileAsBase64(file);  // Ganti fungsi readFile
+                try {
+                    const response = await fetch(url, {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `token ${token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    });
 
-    const url = `https://api.github.com/repos/${username}/${repo}/contents/${folderPath}${randomFileName}`;
-    const headers = {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json'
-    };
+                    if (response.ok) {
+                        const result = await response.json();
+                        const fileUrl = `https://img100.aistore.my.id/${randomFileName}`;
 
-    const data = {
-        message: `Upload ${randomFileName}`,
-        content: fileContent,  // Gunakan base64 dari file
-        branch: branch
-    };
+                        // Progress bar animation
+                        let progress = 0;
+                        const interval = setInterval(() => {
+                            progress += 3.33; // Increase 3.33% per second
+                            progressBar.style.width = `${progress}%`;
 
-    try {
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify(data)
+                            if (progress >= 100) {
+                                clearInterval(interval);
+                                progressBar.style.width = "100%";
+                                output.style.display = "block";
+                                fileLink.href = fileUrl;
+                                fileLink.textContent = fileUrl;
+                            }
+                        }, 1000); // Update every second
+                    } else {
+                        alert("Upload failed. Check your details.");
+                    }
+                } catch (error) {
+                    console.error("Error uploading file:", error);
+                    alert("An error occurred while uploading the file.");
+                }
+            };
         });
-
-        const result = await response.json();
-
-        if (response.ok) {
-        	setTimeout(function() {
-            document.getElementById("result").innerText = "Waiting for 1m!";
-        }, 2000);
-         setTimeout(function() { 
-            document.getElementById('result').innerHTML = `File uploaded successfully! <a href="https://aistore.my.id/Upload/${randomFileName}" target="_blank">Click here to view the file</a>`;
-               }, 60000);  } else {
-            document.getElementById('result').innerHTML = `Error: ${result.message}`;
-        }
-    } catch (error) {
-        console.error(error);
-        document.getElementById('result').innerHTML = 'Failed to upload file.';
-    }
-}
-
-// Fungsi untuk membaca file dan mengembalikan base64
-function readFileAsBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);  // Ambil bagian base64 setelah ","
-        reader.onerror = reject;
-        reader.readAsDataURL(file);  // Membaca file sebagai Data URL (base64)
-    });
-}
     </script>
 </body>
 </html>
