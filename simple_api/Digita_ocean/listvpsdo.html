@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List VPS - DigitalOcean</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Daftar VPS (Droplets) - DigitalOcean</h1>
+  <div>
+    <label for="apiKeyInput">Masukkan API Key Anda:</label>
+    <input type="text" id="apiKeyInput" placeholder="Masukkan API Key DigitalOcean">
+    <button onclick="fetchDroplets()">Lihat Droplets</button>
+  </div>
+  <div id="loading" style="margin-top: 20px;">Masukkan API key untuk memulai.</div>
+  <table id="dropletTable" style="display: none;">
+    <thead>
+      <tr>
+        <th>ID VPS</th>
+        <th>Nama VPS</th>
+        <th>Status</th>
+        <th>IP Address (IPv4)</th>
+        <th>IP Address (IPv6)</th>
+        <th>Region</th>
+      </tr>
+    </thead>
+    <tbody id="dropletList">
+    </tbody>
+  </table>
+<div>
+  <a href='changepassvps.html'>Change Pass Vps<a> 	</div><div> <a href='createvps.html'>Create Vps<a>	</div> <div>  <a href='listvpsdo.html'>List Vps Do<a>  </div>  <div><a href='deletevpsdo.html'>delete Vps<a>
+</div>
+  <script>
+    async function fetchDroplets() {
+      const apiKey = document.getElementById("apiKeyInput").value.trim();
+      const apiUrl = "https://api.digitalocean.com/v2/droplets";
+
+      if (!apiKey) {
+        document.getElementById("loading").textContent = "API Key tidak boleh kosong!";
+        return;
+      }
+
+      document.getElementById("loading").textContent = "Loading...";
+      document.getElementById("dropletTable").style.display = "none";
+      document.getElementById("dropletList").innerHTML = "";
+
+      try {
+        const response = await fetch(apiUrl, {
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        displayDroplets(data.droplets);
+      } catch (error) {
+        document.getElementById("loading").textContent = `Gagal memuat data: ${error.message}`;
+      }
+    }
+
+    function displayDroplets(droplets) {
+      const table = document.getElementById("dropletTable");
+      const tbody = document.getElementById("dropletList");
+      document.getElementById("loading").style.display = "none";
+
+      if (droplets.length === 0) {
+        document.getElementById("loading").textContent = "Tidak ada droplets yang ditemukan.";
+        return;
+      }
+
+      droplets.forEach((droplet) => {
+        const row = document.createElement("tr");
+
+        const idCell = document.createElement("td");
+        idCell.textContent = droplet.id;
+        row.appendChild(idCell);
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = droplet.name;
+        row.appendChild(nameCell);
+
+        const statusCell = document.createElement("td");
+        statusCell.textContent = droplet.status;
+        row.appendChild(statusCell);
+
+        const ipv4Cell = document.createElement("td");
+        ipv4Cell.textContent = droplet.networks.v4[0]?.ip_address || "N/A";
+        row.appendChild(ipv4Cell);
+
+        const ipv6Cell = document.createElement("td");
+        ipv6Cell.textContent = droplet.networks.v6[0]?.ip_address || "N/A";
+        row.appendChild(ipv6Cell);
+
+        const regionCell = document.createElement("td");
+        regionCell.textContent = droplet.region.name;
+        row.appendChild(regionCell);
+
+        tbody.appendChild(row);
+      });
+
+      table.style.display = "table";
+    }
+  </script>
+</body>
+</html>

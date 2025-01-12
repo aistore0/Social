@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hapus VPS DigitalOcean</title>
+</head>
+<body>
+  <h1>Hapus VPS DigitalOcean</h1>
+  <form id="deleteForm">
+    <label for="apiKey">Masukkan API Key:</label><br>
+    <input type="password" id="apiKey" name="apiKey" required><br><br>
+
+    <label for="dropletId">Masukkan Droplet ID:</label><br>
+    <input type="text" id="dropletId" name="dropletId" required><br><br>
+
+    <button type="submit">Hapus Droplet</button>
+  </form>
+  <p id="result"></p>
+<div>
+  <a href='changepassvps.html'>Change Pass Vps<a> 	</div><div> <a href='createvps.html'>Create Vps<a>	</div> <div>  <a href='listvpsdo.html'>List Vps Do<a>  </div>  <div><a href='deletevpsdo.html'>delete Vps<a>
+</div>
+  <script>
+    document.getElementById("deleteForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const apiKey = document.getElementById("apiKey").value;
+      const dropletId = document.getElementById("dropletId").value;
+      const url = `https://api.digitalocean.com/v2/droplets/${dropletId}`;
+
+      if (!apiKey || !dropletId) {
+        document.getElementById("result").innerText = "API Key dan Droplet ID harus diisi.";
+        return;
+      }
+
+      try {
+        const response = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          document.getElementById("result").innerText = `Droplet ${dropletId} berhasil dihapus.`;
+        } else {
+          const errorData = await response.json();
+          document.getElementById("result").innerText = `Error: ${errorData.message}`;
+        }
+      } catch (error) {
+        document.getElementById("result").innerText = `Request gagal: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
