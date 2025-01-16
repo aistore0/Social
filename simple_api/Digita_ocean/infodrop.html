@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Droplet Info by ID</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #555;
+    }
+    input {
+      width: calc(100% - 20px);
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .droplet-info {
+      margin-top: 20px;
+    }
+    .droplet-info p {
+      color: #333;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Get Droplet Info</h1>
+    <form id="dropletForm">
+      <label for="apiToken">API Token:</label>
+      <input type="text" id="apiToken" placeholder="Enter your API token" required>
+      <label for="dropletId">Droplet ID:</label>
+      <input type="text" id="dropletId" placeholder="Enter Droplet ID" required>
+      <button type="submit">Fetch Info</button>
+    </form>
+    <div class="droplet-info" id="dropletInfo"></div>
+  </div>
+  <div>
+  <a href='changepassvps.html'>Change Pass Vps<a> 	</div><div> <a href='createvps.html'>Create Vps<a>	</div> <div>  <a href='listvpsdo.html'>List Vps Do<a>  </div>  <div><a href='deletevpsdo.html'>delete Vps<a></div><div><a href=infodrop.html>Info droplet vps<a>
+</div>
+
+  <script>
+    document.getElementById('dropletForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const apiToken = document.getElementById('apiToken').value;
+      const dropletId = document.getElementById('dropletId').value;
+      const apiUrl = `https://api.digitalocean.com/v2/droplets/${dropletId}`;
+      const dropletInfo = document.getElementById('dropletInfo');
+
+      dropletInfo.innerHTML = 'Fetching data...';
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${apiToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const droplet = data.droplet;
+
+        // IPv4 Address
+        const ipv4 = droplet.networks.v4.find(net => net.type === 'public')?.ip_address || 'N/A';
+
+        dropletInfo.innerHTML = `
+          <h3>Droplet Info</h3>
+          <p><strong>ID:</strong> ${droplet.id}</p>
+          <p><strong>Name:</strong> ${droplet.name}</p>
+          <p><strong>Status:</strong> ${droplet.status}</p>
+          <p><strong>Public IPv4:</strong> ${ipv4}</p>
+          <p><strong>Region:</strong> ${droplet.region.slug}</p>
+          <p><strong>Created At:</strong> ${new Date(droplet.created_at).toLocaleString()}</p>
+        `;
+      } catch (error) {
+        dropletInfo.innerHTML = `<p class="error">${error.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
