@@ -1,0 +1,11 @@
+{
+  "creator": "Faiz"
+  "status": true,
+  "result" {
+  "path": "../kanna/thumbnail.jpg"
+  }
+  "account" {
+    "username": "user"
+    "password": "user"
+  }
+}
